@@ -5,6 +5,8 @@ public class CameraController : MonoBehaviour
     [SerializeField] private Camera mainCamera;
     [SerializeField] private Camera thirdPCamera;
 
+    private GameObject obj;
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Tab) && mainCamera.gameObject.activeSelf)
@@ -21,10 +23,18 @@ public class CameraController : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(thirdPCamera.transform.position, thirdPCamera.transform.forward, out hit, 10f, LayerMask.GetMask("Interactable")))
         {
+            obj = hit.transform.gameObject;
             //Debug.DrawRay(thirdPCamera.transform.position, thirdPCamera.transform.forward * 10f, Color.red);
             //Debug.Log(name);
 
-            hit.transform.GetComponent<Interactable>().Interact();
+            if (hit.collider.tag == "Techo")
+            {
+                hit.collider.gameObject.GetComponent<MeshRenderer>().enabled = false;
+            }
+            else if(obj != null)
+            {
+                hit.collider.gameObject.GetComponent<MeshRenderer>().enabled = true;
+            }
         }
     }
 }
