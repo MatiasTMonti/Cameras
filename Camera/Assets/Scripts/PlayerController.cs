@@ -27,4 +27,12 @@ public class PlayerController : MonoBehaviour
             cameras[0].gameObject.SetActive(true);
         }
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Bounce"))
+        {
+            rb.AddForce(new Vector3(0f, 10f, 0f), ForceMode.Impulse);
+        }
+    }
 }
